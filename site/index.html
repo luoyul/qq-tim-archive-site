@@ -3,45 +3,143 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QQ / TIM 历史版本</title>
+  <meta name="description" content="QQ 与 TIM Android 历史版本索引与下载入口">
+  <title>QQ / TIM 历史版本归档</title>
   <style>
-    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
-    body { max-width: 1100px; margin: 0 auto; padding: 24px; line-height: 1.5; }
-    header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
-    h1 { margin: 0; } .status { color: #777; }
-    nav { display: flex; gap: 8px; margin: 20px 0; }
-    button { padding: 8px 14px; cursor: pointer; }
-    table { width: 100%; border-collapse: collapse; } th, td { padding: 9px 8px; border-bottom: 1px solid #8885; text-align: left; }
-    a { color: #1677d2; } .error { color: #b42318; }
+    :root {
+      color-scheme: light;
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: #172033;
+      background: #f4f6f9;
+      --ink-muted: #667085;
+      --line: #e4e7ec;
+      --brand: #1769e0;
+      --brand-soft: #eaf2ff;
+      --surface: #fff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: #f4f6f9; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 42px 0 28px; }
+    .eyebrow { margin: 0 0 10px; color: var(--brand); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -.02em; }
+    .intro { max-width: 650px; margin: 14px 0 0; color: var(--ink-muted); font-size: 15px; }
+    .toolbar { display: grid; grid-template-columns: auto minmax(240px, 1fr) auto; gap: 14px; align-items: center; margin: 8px 0 18px; }
+    .tabs { display: inline-flex; padding: 4px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    button { border: 0; border-radius: 6px; background: transparent; color: var(--ink-muted); cursor: pointer; font: inherit; font-weight: 650; padding: 9px 18px; }
+    button:hover { color: var(--brand); }
+    button.active { background: var(--brand); color: #fff; }
+    .search { display: flex; align-items: center; gap: 9px; min-width: 0; height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    .search svg { flex: 0 0 auto; color: #98a2b3; }
+    input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: inherit; font: inherit; }
+    .status { color: var(--ink-muted); font-size: 13px; text-align: right; white-space: nowrap; }
+    .status.error { color: #b42318; }
+    .panel { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); box-shadow: 0 2px 8px #1018280a; }
+    .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+    .panel-title { margin: 0; font-size: 16px; }
+    .count { color: var(--ink-muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { color: var(--ink-muted); font-size: 12px; font-weight: 650; letter-spacing: .03em; text-transform: uppercase; }
+    th, td { padding: 14px 20px; border-bottom: 1px solid var(--line); text-align: left; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #f8faff; }
+    .version { color: #101828; font-weight: 700; }
+    .subtle { color: var(--ink-muted); font-size: 13px; }
+    .hash { color: var(--ink-muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
+    .download { display: inline-block; padding: 7px 12px; border-radius: 6px; background: var(--brand-soft); color: var(--brand); font-size: 13px; font-weight: 700; text-decoration: none; }
+    .download:hover { background: #dce9ff; }
+    .empty { padding: 44px 20px; color: var(--ink-muted); text-align: center; }
+    footer { padding: 24px 0 40px; color: var(--ink-muted); font-size: 12px; }
+    footer a { color: inherit; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 620px); }
+      header { padding-top: 28px; }
+      .toolbar { grid-template-columns: 1fr; gap: 10px; }
+      .tabs { justify-content: stretch; }
+      .tabs button { flex: 1; }
+      .status { text-align: left; }
+      .panel { border-radius: 8px; }
+      table, thead, tbody, tr, th, td { display: block; }
+      thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+      tbody tr { padding: 14px 16px; border-bottom: 1px solid var(--line); }
+      tbody tr:last-child { border-bottom: 0; }
+      td { display: flex; justify-content: space-between; gap: 14px; padding: 5px 0; border: 0; text-align: right; }
+      td::before { color: var(--ink-muted); content: attr(data-label); font-size: 12px; text-align: left; }
+      td:first-child { display: block; padding-bottom: 8px; text-align: left; }
+      td:first-child::before { display: none; }
+    }
   </style>
 </head>
 <body>
-  <header><h1>QQ / TIM 历史版本</h1><span id="status" class="status">正在读取版本索引...</span></header>
-  <nav aria-label="产品筛选"><button data-product="qq">QQ</button><button data-product="tim">TIM</button></nav>
-  <main><table><thead><tr><th>版本</th><th>版本号</th><th>大小</th><th>校验</th><th>Release</th></tr></thead><tbody id="versions"></tbody></table></main>
+  <div class="shell">
+    <header>
+      <p class="eyebrow">Version Archive</p>
+      <h1>QQ / TIM 历史版本</h1>
+      <p class="intro">查找 Android 历史版本，查看版本号、文件大小和 SHA-256 校验值，并从对应 Release 下载。</p>
+    </header>
+
+    <section class="toolbar" aria-label="版本筛选">
+      <div class="tabs" role="tablist" aria-label="产品">
+        <button class="active" data-product="qq" role="tab" aria-selected="true">QQ</button>
+        <button data-product="tim" role="tab" aria-selected="false">TIM</button>
+      </div>
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input id="query" type="search" placeholder="搜索版本号或 versionCode" autocomplete="off">
+      </label>
+      <span id="status" class="status" role="status">正在读取版本索引...</span>
+    </section>
+
+    <main class="panel">
+      <div class="panel-head"><h2 id="product-title" class="panel-title">QQ 版本</h2><span id="count" class="count">-</span></div>
+      <table>
+        <thead><tr><th>版本</th><th>版本号</th><th>大小</th><th>SHA-256</th><th>下载</th></tr></thead>
+        <tbody id="versions"><tr><td colspan="5" class="empty">正在读取...</td></tr></tbody>
+      </table>
+    </main>
+
+    <footer>版本索引由 <a href="https://github.com/luoyul/qq-versions">QQ</a> 与 <a href="https://github.com/luoyul/tim-versions">TIM</a> 归档仓库提供。</footer>
+  </div>
+
   <script>
     const sources = {
       qq: 'https://raw.githubusercontent.com/luoyul/qq-versions/main/catalog/qq.json',
       tim: 'https://raw.githubusercontent.com/luoyul/tim-versions/main/catalog/tim.json'
     };
     const state = { qq: [], tim: [], product: 'qq' };
-    const formatSize = bytes => bytes ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : '-';
+    const $ = selector => document.querySelector(selector);
+    const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+    const formatSize = bytes => bytes ? `${(Number(bytes) / 1024 / 1024).toFixed(1)} MB` : '-';
+
     async function load(product) {
       const response = await fetch(sources[product], { cache: 'no-store' });
-      if (!response.ok) throw new Error(`${product} catalog HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`${product.toUpperCase()} 索引读取失败（HTTP ${response.status}）`);
       const data = await response.json();
       state[product] = Array.isArray(data.versions) ? data.versions : [];
     }
+
     function render() {
-      const rows = state[state.product].map(item => `<tr><td>${item.versionName ?? '-'}</td><td>${item.versionCode ?? '-'}</td><td>${formatSize(item.size)}</td><td title="${item.sha256 ?? ''}">${item.sha256 ? item.sha256.slice(0, 12) : '-'}</td><td>${item.releaseUrl ? `<a href="${item.releaseUrl}">下载</a>` : '-'}</td></tr>`).join('');
-      document.querySelector('#versions').innerHTML = rows || '<tr><td colspan="5">暂无记录</td></tr>';
+      const product = state.product;
+      const query = $('#query').value.trim().toLowerCase();
+      const items = state[product].filter(item => !query || `${item.versionName ?? ''} ${item.versionCode ?? ''}`.toLowerCase().includes(query));
+      $('#product-title').textContent = `${product.toUpperCase()} 版本`;
+      $('#count').textContent = query ? `${items.length} / ${state[product].length} 个版本` : `${items.length} 个版本`;
+      $('#versions').innerHTML = items.length ? items.map(item => {
+        const version = escapeHtml(item.versionName || '-');
+        const code = escapeHtml(item.versionCode || '-');
+        const hash = escapeHtml(item.sha256 || '');
+        const link = escapeHtml(item.releaseUrl || '#');
+        return `<tr><td><span class="version">${version}</span></td><td data-label="版本号"><span class="subtle">${code}</span></td><td data-label="大小"><span class="subtle">${formatSize(item.size)}</span></td><td data-label="SHA-256"><span class="hash" title="${hash}">${hash ? hash.slice(0, 12) : '-'}</span></td><td data-label="下载">${item.releaseUrl ? `<a class="download" href="${link}" target="_blank" rel="noopener">打开 Release</a>` : '-'}</td></tr>`;
+      }).join('') : '<tr><td colspan="5" class="empty">没有匹配的版本</td></tr>';
     }
-    async function start() {
-      try { await Promise.all(Object.keys(sources).map(load)); document.querySelector('#status').textContent = '索引已更新'; render(); }
-      catch (error) { document.querySelector('#status').textContent = error.message; document.querySelector('#status').className = 'status error'; }
-    }
-    document.querySelectorAll('button[data-product]').forEach(button => button.addEventListener('click', () => { state.product = button.dataset.product; render(); }));
-    start();
+
+    document.querySelectorAll('[data-product]').forEach(button => button.addEventListener('click', () => {
+      state.product = button.dataset.product;
+      document.querySelectorAll('[data-product]').forEach(item => { const active = item === button; item.classList.toggle('active', active); item.setAttribute('aria-selected', active); });
+      render();
+    }));
+    $('#query').addEventListener('input', render);
+    Promise.all(Object.keys(sources).map(load)).then(() => { $('#status').textContent = '索引已更新'; render(); }).catch(error => { $('#status').textContent = error.message; $('#status').classList.add('error'); });
   </script>
 </body>
 </html>
