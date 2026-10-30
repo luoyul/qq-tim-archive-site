@@ -13,7 +13,7 @@ QQ/TIM 版本索引站用于集中查找 QQ 和 TIM 的 Android 历史版本。�
 
 ## 数据来源
 
-页面使用 `site/data/` 中的版本索引镜像，内容对应两个独立的归档仓库：
+页面访问两个独立归档仓库中的 catalog，打开页面时动态读取最新版本索引：
 
 - [QQ Android 历史版本](https://github.com/luoyul/qq-versions)
 - [TIM Android 历史版本](https://github.com/luoyul/tim-versions)
