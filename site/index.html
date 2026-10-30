@@ -133,7 +133,7 @@
         const hash = escapeHtml(item.sha256 || '');
         const releaseLink = escapeHtml(item.releaseUrl || '#');
         const assetLink = item.releaseTag && item.fileName ? `https://github.com/${releaseRepos[product]}/releases/download/${encodeURIComponent(item.releaseTag)}/${encodeURIComponent(item.fileName)}` : '';
-        const directLink = escapeHtml(assetLink);
+        const directLink = escapeHtml(assetLink ? `https://v4.gh-proxy.org/${assetLink}` : '');
         const actions = assetLink ? `<a class="download" href="${directLink}" target="_blank" rel="noopener">直接下载</a><a class="download release" href="${releaseLink}" target="_blank" rel="noopener">打开 Release</a>` : (item.releaseUrl ? `<a class="download" href="${releaseLink}" target="_blank" rel="noopener">打开 Release</a>` : '-');
         return `<tr><td><span class="version">${version}</span></td><td data-label="版本号"><span class="subtle">${code}</span></td><td data-label="大小"><span class="subtle">${formatSize(item.size)}</span></td><td data-label="SHA-256"><span class="hash" title="${hash}">${hash ? hash.slice(0, 12) : '-'}</span></td><td data-label="下载">${actions}</td></tr>`;
       }).join('') : '<tr><td colspan="5" class="empty">没有匹配的版本</td></tr>';
