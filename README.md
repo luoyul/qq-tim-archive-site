@@ -19,7 +19,3 @@ QQ/TIM 版本索引站用于集中查找 QQ 和 TIM 的 Android 历史版本。�
 - [TIM Android 历史版本](https://github.com/luoyul/tim-versions)
 
 安装包下载和文件校验请以对应版本仓库的 Release 页面及校验清单为准。
-
-## 页面文件
-
-网站入口文件位于 [`site/index.html`](site/index.html)，可使用静态网页托管服务发布，也可以在本地直接预览。
