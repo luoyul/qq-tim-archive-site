@@ -48,6 +48,8 @@
     .hash { color: var(--ink-muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 12px; }
     .download { display: inline-block; padding: 7px 12px; border-radius: 6px; background: var(--brand-soft); color: var(--brand); font-size: 13px; font-weight: 700; text-decoration: none; }
     .download:hover { background: #dce9ff; }
+    .download.release { margin-left: 6px; background: transparent; color: var(--ink-muted); font-weight: 600; }
+    .download.release:hover { background: #f2f4f7; color: var(--brand); }
     .empty { padding: 44px 20px; color: var(--ink-muted); text-align: center; }
     footer { padding: 24px 0 40px; color: var(--ink-muted); font-size: 12px; }
     footer a { color: inherit; }
@@ -110,6 +112,7 @@
     const $ = selector => document.querySelector(selector);
     const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
     const formatSize = bytes => bytes ? `${(Number(bytes) / 1024 / 1024).toFixed(1)} MB` : '-';
+    const releaseRepos = { qq: 'luoyul/qq-versions', tim: 'luoyul/tim-versions' };
 
     async function load(product) {
       const response = await fetch(sources[product], { cache: 'no-store' });
@@ -128,8 +131,11 @@
         const version = escapeHtml(item.versionName || '-');
         const code = escapeHtml(item.versionCode || '-');
         const hash = escapeHtml(item.sha256 || '');
-        const link = escapeHtml(item.releaseUrl || '#');
-        return `<tr><td><span class="version">${version}</span></td><td data-label="版本号"><span class="subtle">${code}</span></td><td data-label="大小"><span class="subtle">${formatSize(item.size)}</span></td><td data-label="SHA-256"><span class="hash" title="${hash}">${hash ? hash.slice(0, 12) : '-'}</span></td><td data-label="下载">${item.releaseUrl ? `<a class="download" href="${link}" target="_blank" rel="noopener">打开 Release</a>` : '-'}</td></tr>`;
+        const releaseLink = escapeHtml(item.releaseUrl || '#');
+        const assetLink = item.releaseTag && item.fileName ? `https://github.com/${releaseRepos[product]}/releases/download/${encodeURIComponent(item.releaseTag)}/${encodeURIComponent(item.fileName)}` : '';
+        const directLink = escapeHtml(assetLink);
+        const actions = assetLink ? `<a class="download" href="${directLink}" target="_blank" rel="noopener">直接下载</a><a class="download release" href="${releaseLink}" target="_blank" rel="noopener">打开 Release</a>` : (item.releaseUrl ? `<a class="download" href="${releaseLink}" target="_blank" rel="noopener">打开 Release</a>` : '-');
+        return `<tr><td><span class="version">${version}</span></td><td data-label="版本号"><span class="subtle">${code}</span></td><td data-label="大小"><span class="subtle">${formatSize(item.size)}</span></td><td data-label="SHA-256"><span class="hash" title="${hash}">${hash ? hash.slice(0, 12) : '-'}</span></td><td data-label="下载">${actions}</td></tr>`;
       }).join('') : '<tr><td colspan="5" class="empty">没有匹配的版本</td></tr>';
     }
 
