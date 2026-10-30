@@ -1,10 +1,25 @@
-# QQ/TIM 版本归档站点
+# QQ/TIM 版本索引站
 
-本仓库只提供 QQ 与 TIM 历史版本的静态索引页面，不保存 APK 安装包。
+QQ/TIM 版本索引站用于集中查找 QQ 和 TIM 的 Android 历史版本。页面支持在 QQ 与 TIM 之间切换，并按版本名称或 `versionCode` 搜索记录。
 
-页面分别读取以下两个独立版本仓库的 catalog：
+## 页面信息
 
-- [QQ 版本仓库](https://github.com/luoyul/qq-versions)
-- [TIM 版本仓库](https://github.com/luoyul/tim-versions)
+每条版本记录会显示：
 
-GitHub Pages 发布本仓库的 `site/` 目录即可。版本文件仍由两个独立仓库的 GitHub Releases 提供。
+- 版本名称和 `versionCode`；
+- APK 文件大小；
+- SHA-256 校验值；
+- 对应的 Release 下载入口。
+
+## 数据来源
+
+页面版本数据来自两个独立的归档仓库：
+
+- [QQ Android 历史版本](https://github.com/luoyul/qq-versions)
+- [TIM Android 历史版本](https://github.com/luoyul/tim-versions)
+
+安装包下载和文件校验请以对应版本仓库的 Release 页面及校验清单为准。
+
+## 页面文件
+
+网站入口文件位于 [`site/index.html`](site/index.html)，可使用静态网页托管服务发布，也可以在本地直接预览。
